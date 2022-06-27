@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionForm extends StatefulWidget {
   late final Function(String title, double value) onSubmit;
   TransactionForm(this.onSubmit);
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
 
   _submitForm() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0.0; // tentando converter para double e se não for possível, o valor padrão é 0
-
-    if(title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0) {
       return; // sairá da função, ou seja, não será submetido
     }
-
-    onSubmit(title, value);
+    widget.onSubmit(title, value); // Em componentes statefull acessaremos os atributos da classe pai (TransactionForm) através do widget.
   }
 
   @override
