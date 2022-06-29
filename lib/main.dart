@@ -20,19 +20,23 @@ class ExpensesApp extends StatelessWidget {
         colorScheme: tema.colorScheme.copyWith(
           primary: Colors.purple,
           secondary: Colors.amber,
+          tertiary: Colors.white,
         ),
         textTheme: tema.textTheme.copyWith(
           headline6: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.normal,
             color: Colors.black,
           ),
           headline5: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 17,
-            fontWeight: FontWeight.bold,
             color: Colors.white,
+          ),
+          button: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         appBarTheme: AppBarTheme(

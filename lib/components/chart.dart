@@ -32,7 +32,7 @@ class Chart extends StatelessWidget {
             .format(weekDay)[0], // para mostrar apenas a primeira letra do dia,
         'value': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
   double get _weekTotalValue {

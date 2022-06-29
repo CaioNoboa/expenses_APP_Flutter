@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   late final Function(String title, double value) onSubmit;
@@ -9,16 +10,38 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+  late final DateTime _selectedDate;
 
   _submitForm() {
-    final title = titleController.text;
-    final value = double.tryParse(valueController.text) ?? 0.0; // tentando converter para double e se não for possível, o valor padrão é 0
+    final title = _titleController.text;
+    final value = double.tryParse(_valueController.text) ??
+        0.0; // tentando converter para double e se não for possível, o valor padrão é 0
     if (title.isEmpty || value <= 0) {
       return; // sairá da função, ou seja, não será submetido
     }
-    widget.onSubmit(title, value); // Em componentes statefull acessaremos os atributos da classe pai (TransactionForm) através do widget.
+    widget.onSubmit(title,
+        value); // Em componentes statefull acessaremos os atributos da classe pai (TransactionForm) através do widget.
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      // função assíncrona
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      // por ser assíncrona, passamos outra função dentro que será chamada ao selecionarmos a data
+      if (pickedDate == null) {
+        return;
+      }
+
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -30,26 +53,55 @@ class _TransactionFormState extends State<TransactionForm> {
         child: Column(
           children: <Widget>[
             TextField(
-              controller: titleController,
+              controller: _titleController,
               onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(
                 labelText: 'Título',
               ),
             ),
             TextField(
-              controller: valueController,
+              controller: _valueController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(
                 labelText: 'Valor (R\$)',
               ),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      _selectedDate == null
+                          ? 'Nenhuma data selecionada!'
+                          : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}',
+                    ),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).colorScheme.primary,
+                    ),
+                    child: Text(
+                      'Selecionar Data',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: _showDatePicker,
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
+              children: <Widget>[
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.primary,
+                    onPrimary: Theme.of(context).colorScheme.tertiary,
+                  ),
                   child: Text('Nova Transação'),
-                  textColor: Theme.of(context).colorScheme.primary,
                   onPressed: _submitForm,
                 ),
               ],
