@@ -1,6 +1,6 @@
 # expenses - Flutter APP
 
-This project is a prototype of a financial expense monitoring application (Figure 1). 
+### This project is a prototype of a financial expense monitoring application (Figure 1). 
 
 ![First Screen](https://github.com/CaioNoboa/expenses_APP_Flutter/blob/main/assets/images/Slide1.JPG)
 ![Second Screen](https://github.com/CaioNoboa/expenses_APP_Flutter/blob/main/assets/images/Slide2.JPG)
