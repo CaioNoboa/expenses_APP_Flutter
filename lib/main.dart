@@ -61,9 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract( // isAfter resulta em true ou false, se a data for mais antiga que 7 dias atrás, retornará false e não entrará na conta
+      return tr.date.isAfter(DateTime.now().subtract(
+        // isAfter resulta em true ou false, se a data for mais antiga que 7 dias atrás, retornará false e não entrará na conta
         Duration(days: 7), // para entrar no gráfico apenas a última semana
-      )); 
+      ));
     }).toList();
   }
 
@@ -80,6 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) { // se retornar true, o elemento é removido e false será mantido
+        return tr.id == id;
+      });
+    });
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -108,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),

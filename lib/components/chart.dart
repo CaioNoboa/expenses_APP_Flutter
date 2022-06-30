@@ -59,7 +59,7 @@ class Chart extends StatelessWidget {
                 percentage: _weekTotalValue == 0 ? 0 : (tr['value'] as double) / _weekTotalValue,
               ),
             );
-          }).toList(),
+          }).toList(), 
         ),
       ),
     );
