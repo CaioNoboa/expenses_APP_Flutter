@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  late final Function(String title, double value) onSubmit;
+  late final Function(String title, double value, DateTime) onSubmit;
   TransactionForm(this.onSubmit);
 
   @override
@@ -12,17 +12,20 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final _titleController = TextEditingController();
   final _valueController = TextEditingController();
-  late final DateTime _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ??
         0.0; // tentando converter para double e se não for possível, o valor padrão é 0
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return; // sairá da função, ou seja, não será submetido
     }
-    widget.onSubmit(title,
-        value); // Em componentes statefull acessaremos os atributos da classe pai (TransactionForm) através do widget.
+    widget.onSubmit( // Em componentes statefull acessaremos os atributos da classe pai (TransactionForm) através do widget.
+      title, 
+      value,
+      _selectedDate,
+    );
   }
 
   _showDatePicker() {
