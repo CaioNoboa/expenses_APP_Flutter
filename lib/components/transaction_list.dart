@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320, // precisa de uma altura pré-definida para o scroll funcionar
+      height: 390, // precisa de uma altura pré-definida para o scroll funcionar
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
