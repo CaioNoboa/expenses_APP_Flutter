@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'adaptative_textField.dart';
 
 class TransactionForm extends StatefulWidget {
-  late final Function(String title, double value, DateTime) onSubmit;
-  TransactionForm(this.onSubmit);
+  final Function(String title, double value, DateTime) onSubmit;
+  
+  const TransactionForm({
+    Key? key,
+    required this.onSubmit,
+  }) : super(key: key);
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -20,7 +24,7 @@ class _TransactionFormState extends State<TransactionForm> {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ??
         0.0; // tentando converter para double e se não for possível, o valor padrão é 0
-    if (title.isEmpty || value <= 0 || _selectedDate == null) {
+    if (title.isEmpty || value <= 0) {
       return; // sairá da função, ou seja, não será submetido
     }
     widget.onSubmit(
@@ -57,7 +61,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 controller: _valueController,
                 onSubmitted: (_) => _submitForm(),
                 labelText: 'Valor (R\$)',
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
               ),
               //
               AdaptativeDatePicker(

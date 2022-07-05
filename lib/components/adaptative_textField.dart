@@ -3,17 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdaptativeTextField extends StatelessWidget {
-  late final TextEditingController controller;
-  late final Function(String) onSubmitted;
-  late final String labelText;
-  late final TextInputType keyboardType;
+  final TextEditingController controller;
+  final Function(String) onSubmitted;
+  final String labelText;
+  final TextInputType keyboardType;
 
-  AdaptativeTextField({
+  const AdaptativeTextField({
+    Key? key,
     required this.controller,
     required this.onSubmitted,
     required this.labelText,
     this.keyboardType = TextInputType.text,
-  });
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class AdaptativeTextField extends StatelessWidget {
               onSubmitted: onSubmitted,
               placeholder: labelText,
               keyboardType: keyboardType,
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 6,
                 vertical: 12,
               ),
